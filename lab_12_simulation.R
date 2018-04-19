@@ -33,6 +33,12 @@ model_select = function(covariates, responses, cutoff)
   return(mod.sum$coefficients[,4])
 }
 
+make_plot = function(datapath){
+  
+  result = readLines(datapath)
+  return(hist(result))
+}
+
 run_simulation = function(n_trials, n, p, cutoff){
   
   result = c()
@@ -44,7 +50,8 @@ run_simulation = function(n_trials, n, p, cutoff){
     output = model_select(mat,vec,cutoff)
     result = c(result, output)
   }
-  return(hist(result))
+  write(result, file = "result.txt")
+  return( make_plot("result.txt") )
   
 }
 
