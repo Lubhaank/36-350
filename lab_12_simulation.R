@@ -33,5 +33,33 @@ model_select = function(covariates, responses, cutoff)
   return(mod.sum$coefficients[,4])
 }
 
+run_simulation = function(n_trials, n, p, cutoff){
+  
+  result = c()
+  for(i in 1:n_trials){
+    
+    val = generate_data(n,p)
+    mat = val$covariates
+    vec = val$responses
+    output = model_select(mat,vec,cutoff)
+    result = c(result, output)
+  }
+  return(hist(result))
+  
+}
+
+allN = c(100, 1000,10000)
+
+allP = c(10,20,50)
+
+for(i in 1:length(allN)){
+  
+  for(j in 1:length(allP)){
+    
+    
+    run_simulation(5, allN[i], allP[j], 0.05)
+  }
+}
+
 
 
